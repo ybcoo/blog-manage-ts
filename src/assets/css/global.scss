@@ -1,0 +1,75 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* 2. 根元素高度/宽度配置（打通百分比高度链条） */
+html,
+body,#app {
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  font-family: Inter, Helvetica, Arial, sans-serif;
+}
+.flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.flexBetween {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.pl {
+  padding-left: 20px;
+}
+.pr {
+  padding-right: 20px;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+.btn {
+  background: linear-gradient(195deg, rgb(66, 66, 74), rgb(25, 25, 25));
+  color: rgb(23, 23, 23);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  position: relative;
+  overflow: hidden;
+  &:hover {
+    background-color: #333;
+  }
+}
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    /* 微调透明度，让效果更明显 */
+    transform: scale(0);
+    /* 初始状态：缩小到0（不可见） */
+    animation: ripple 4s cubic-bezier(0.25, 0.8, 0.25, 1);
+    /* 优化动画曲线，更流畅 */
+    pointer-events: none;
+    /* 避免阻挡按钮点击 */
+}
+
+/* 扩散动画 */
+@keyframes ripple {
+    to {
+        transform: scale(6);
+        /* 扩散到6倍大小（确保覆盖整个按钮） */
+        opacity: 0;
+        /* 动画结束时完全透明 */
+    }
+}
