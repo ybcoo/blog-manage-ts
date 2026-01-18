@@ -15,15 +15,21 @@
     "lint": "eslint . --fix --cache"
   },
   "dependencies": {
+    "@sinclair/typebox": "^0.34.41",
+    "@wangeditor/editor-for-vue": "^5.1.12",
     "axios": "^1.13.2",
+    "lodash": "^4.17.21",
+    "nanoid": "^5.1.6",
     "pinia": "^3.0.3",
     "pinia-plugin-persistedstate": "^4.7.1",
     "vue": "^3.5.22",
-    "vue-router": "^4.6.3"
+    "vue-router": "^4.6.3",
+    "vuedraggable": "^4.1.0"
   },
   "devDependencies": {
     "@arco-design/web-vue": "^2.57.0",
     "@tsconfig/node22": "^22.0.2",
+    "@types/lodash": "^4.17.21",
     "@types/node": "^22.18.11",
     "@vitejs/plugin-vue": "^6.0.1",
     "@vitejs/plugin-vue-jsx": "^5.1.1",

@@ -77,6 +77,7 @@ const handleLogin = async(e:any) => {
         const res=await login(loginForm)
         if(res.data.success){
             router.push('/mainBox')
+            localStorage.setItem('token','1')//先写着后期写上token逻辑再删除
         }
     }catch(e){
         console.error(e)

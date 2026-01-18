@@ -196,6 +196,7 @@ const clickLogout = () => {
   align-items: center;
   padding-left: 20px;
   padding-right: 20px;
+  padding-top: 10px;
   border-radius: 10px;
   background-color: #fff;
 }

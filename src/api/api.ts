@@ -6,3 +6,17 @@ export const login=async(data:any)=>{
         data
     })
 }
+export const uploadImage=async(data:any)=>{
+    return await instance.request({
+        url:'/blogApi/upload/image',
+        method:'post',
+        data
+    })
+}
+export const uploadVideo=async(data:any)=>{
+    return await instance.request({
+        url:'/blogApi/upload/video',
+        method:'post',
+        data
+    })
+}
