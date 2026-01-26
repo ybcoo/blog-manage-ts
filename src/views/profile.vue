@@ -3,11 +3,12 @@
     <div class="left">
       <FishInput v-model="form.title" placeholder="请输入标题"></FishInput>
       <Upload @change="getFile"></Upload>
-      <DropDown v-model="form.option"></DropDown>
+      <DropDown v-model="form.type"></DropDown>
       <Editor v-model="form.content"></Editor>
     </div>
     <div class="right">
-      <div class="review">
+      <Preview :form="form"></Preview>
+      <!-- <div class="review">
         <div class="header">
           <h1 style="margin: 0">{{ form.title || "Your title" }}</h1>
           <h3 v-if="!form.option" style="color: #444444">
@@ -16,10 +17,10 @@
           <h3 v-else style="color: #444444">{{ optionMap[form?.option?.value] }}</h3>
         </div>
         <div class="content">
-          <div v-if="form?.content!=='<p><br></p>'" v-html="form.content"></div>
+          <div v-if="form?.content !== '<p><br></p>'" v-html="form.content"></div>
           <div v-else v-html="defaultHtml"></div>
         </div>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -30,29 +31,38 @@ import FishInput from "@/components/FishInput.vue";
 import Upload from "@/components/Upload.vue";
 import { computed, reactive, watch } from "vue";
 import { defaultHtml } from "@/util/tools";
-const form = reactive<any>({
-  option: null,
+import Preview from "@/components/Preview.vue";
+import { uploadImage } from "@/api/api";
+import { useArticleStore  } from "@/stores/AtricleStore";
+import type{formType} from '@/assets/interface/FormInterface'
+const atricleStore=useArticleStore()
+const form = reactive<formType>({
+  type: null,
   title: "",
   file: null,
   url: "",
   content: "",
 });
 
-const optionMap: any = {
-  travel: "For Travel Moments",
-  daily: "For Daily Life Snippets",
-  memory: "For Precious Memories",
-  diary: "For Personal Diary",
-};
 watch(
-  () => form.content,
+  () => form,
   (newVal, oldVal) => {
-    console.log(newVal);
-  }
+    atricleStore.articleForm=newVal
+    // console.log('监听form',newVal)
+  },{deep:true}
 );
-const getFile = (file: any, url: any) => {
+const getFile = async (file: any, url: any) => {
   form.file = file;
-  form.url = url;
+  const fd = new FormData();
+  fd.append("file", file);
+  try {
+    const res = await uploadImage(fd);
+    const urlRes = res?.data?.url;
+    form.url = urlRes;
+    console.log("正确上传url", form.url);
+  } catch (e) {
+    console.error(e);
+  }
 };
 </script>
 <style lang="scss" scoped>
@@ -114,10 +124,10 @@ const getFile = (file: any, url: any) => {
 }
 .content :deep(img),
 .content :deep(video) {
-  max-width: 100% !important;   /* 不超过预览容器宽度 */
-  width: 100% !important;        /* 占满容器宽度 */
-  height: auto !important;       /* 按比例缩放，避免被拉伸 */
-  display: block !important;     /* 防止行内导致溢出 */
-  border-radius: 8px;            /* 可选视觉优化 */
+  max-width: 100% !important; /* 不超过预览容器宽度 */
+  width: 100% !important; /* 占满容器宽度 */
+  height: auto !important; /* 按比例缩放，避免被拉伸 */
+  display: block !important; /* 防止行内导致溢出 */
+  border-radius: 8px; /* 可选视觉优化 */
 }
 </style>
