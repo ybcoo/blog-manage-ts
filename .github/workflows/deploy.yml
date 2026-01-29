@@ -1,8 +1,14 @@
+# .github/workflows/deploy.yml
 name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches:
+      - master          # 你的默认分支是 master
+  workflow_dispatch:    # 可选：在 Actions 页面手动触发
+
+permissions:
+  contents: write       # 允许往 gh-pages 分支推代码
 
 jobs:
   build-and-deploy:
@@ -15,21 +21,18 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 9
+          node-version: '20'
+          cache: 'npm'
 
       - name: Install dependencies
-        run: pnpm install
+        run: npm ci
 
       - name: Build
-        run: pnpm build
+        run: npm run build
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+          # publish_branch: gh-pages # 默认就是 gh-pages，可以不写
