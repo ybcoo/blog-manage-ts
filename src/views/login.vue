@@ -1,5 +1,6 @@
 <template>
     <div id="login" :style="{ backgroundImage: `url(${backImg})`, backgroundSize: 'cover' }">
+        <!-- <video class="bg-video" src="https://pixabay.com/videos/download/video-141984_medium.mp4" autoplay loop muted playsinline></video> -->
         <div class="header"></div>
         <div class="main flexCenter">
             <div class="setting ">
@@ -74,11 +75,11 @@ const handleLogin = async(e:any) => {
         return ;
     }
     try{
-        const res=await login(loginForm)
-        if(res.data.success){
+        // const res=await login(loginForm)
+        // if(res.data.success){
             router.push('/mainBox')
             localStorage.setItem('token','1')//先写着后期写上token逻辑再删除
-        }
+        // }
     }catch(e){
         console.error(e)
         Message.error("账号密码错误")
@@ -96,6 +97,18 @@ const handleToBlog=()=>{
     height: 100%;
     display: flex;
     flex-direction: column;
+    position: relative;
+    overflow: hidden;
+
+    .bg-video {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: -1;
+    }
 
     .header {
         flex: 1;

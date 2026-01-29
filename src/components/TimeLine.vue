@@ -69,7 +69,7 @@ const clickDot=(item:formType)=>{
   
 }
 onMounted(()=>{
-  atricleStore.selectedItem=null
+  atricleStore.selectedItem=props?.list[0]??null
   atricleStore.deleteIdList=[]
   currentItem.value=props.list[0] as formType
 })

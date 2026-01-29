@@ -1,4 +1,3 @@
-// SimpleTwoRowTable.vue
 <template>
   <table class="table">
     <thead>
@@ -40,20 +39,26 @@ defineProps<{
 <style lang="scss" scoped>
 .table {
   width: 100%;
-  height: 100%;
   border-collapse: collapse;
   table-layout: fixed;
+  background-color: #fff;
+  border-radius: 10px;
   th,
   td {
-    border: 1px solid #ddd;
+    border: 1px solid #f5f5f5;
     text-align: left;
     font-size: 14px;
+    padding: 12px;
+    white-space: nowrap;
   }
 
   th {
-    background: #f5f5f5;
-    font-weight: 500;
-    white-space: nowrap;
+    font-weight: 600;
+  }
+  tr{
+    &:hover{
+      background-color: rgba(249, 249, 249, 0.6);
+    }
   }
 }
 </style>
