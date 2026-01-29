@@ -21,7 +21,7 @@ export default defineConfig({
   server:{
     proxy:{
       '/blogApi':{
-        target:"http://192.168.0.102:3001",
+        target:"http://localhost:3001",
         changeOrigin:true
       }
     }
