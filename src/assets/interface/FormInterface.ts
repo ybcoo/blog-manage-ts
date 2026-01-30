@@ -1,9 +1,10 @@
-export interface formType{
-  id?:number;
-    time?:string;
-  type?: {label:string,value:string}|null,
-  title: string,
-  file?: any,
-  url: string,
-  content: string,
+export interface formType {
+  id?: number;
+  createTime?: string;
+  type?: { label: string; value: string } | null
+  ;
+  title: string;
+  file?: any;
+  url: string;
+  content: string;
 }

@@ -12,9 +12,12 @@
           :is-fixed="isMove"
           :is-collapse="userStore.isCollapse"
           @toggle-collapse="userStore.isCollapse = !userStore.isCollapse"
+          @refreshHome="refreshHome"
         />
         <div class="bottom">
-          <RouterView />
+          <RouterView v-slot="{ Component }">
+             <component :is="Component" ref="routerViewRef" />
+          </RouterView>
         </div>
       </div>
     </div>
@@ -25,7 +28,10 @@ import sideMenu from "@/components/sideMenu.vue";
 import Navigation from "@/components/Navigation.vue";
 import { onMounted, ref, onUnmounted, nextTick } from "vue";
 import { useUserStore } from "@/stores/UserStore";
+import { useRoute } from "vue-router";
+const route=useRoute()
 const userStore = useUserStore();
+const routerViewRef=ref<any>(null)
 const isMove = ref(false);
 let initialOffsetTop = 0;
 const rightContainer:any = ref(null);
@@ -35,6 +41,11 @@ const handleScroll = () => {
     isMove.value = scrollTop > initialOffsetTop;
   }
 };
+const refreshHome=async()=>{
+  if(route.name==='home'&&routerViewRef.value){
+    await routerViewRef.value.getArticleList()
+  }
+}
 onMounted(() => {
   nextTick(() => {
     if (rightContainer.value) {

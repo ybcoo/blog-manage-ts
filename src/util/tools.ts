@@ -69,7 +69,7 @@ export const defaultHtml = `
   <div style="margin: 16px 0; border: 1px dashed #d0d7de; border-radius: 10px; padding: 12px; background: #fafafa;">
     <div style="font-size: 14px; color: #6a737d;">Video placeholder</div>
     <video controls style="width: 100%; border-radius: 10px; margin-top: 8px;">
-      <source src="https://interactive-examples.mdn.mozilla.org/media/cc0-videos/flower.mp4" type="video/mp4">
+      <source src="" type="video/mp4">
       Your browser does not support video playback.
     </video>
   </div>

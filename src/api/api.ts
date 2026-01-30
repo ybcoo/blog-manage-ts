@@ -20,3 +20,24 @@ export const uploadVideo=async(data:any)=>{
         data
     })
 }
+export const createArticle=async(data:any)=>{
+    return await instance.request({
+        url:'/blogApi/createArticle',
+        method:'post',
+        data
+    })
+}
+export const getArticle=async(params?:any)=>{
+    return await instance.request({
+        url:'/blogApi/getArticle',
+        method:'get',
+        params
+    })
+}
+export const deleteArticle=async(data:any)=>{
+    return await instance.request({
+        url:"/blogApi/deleteArticle",
+        method:'post',
+        data
+    })
+}

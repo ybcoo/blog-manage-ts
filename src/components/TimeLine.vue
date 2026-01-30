@@ -11,13 +11,12 @@
         <!-- 内容卡片 -->
         <div class="timeline-content" :class="{'selected':currentItem?.id==item?.id}" @click="getClickItem(item)">
           <div class="left">
-            <div class="timeline-time">{{ item.time }}</div>
+            <div class="timeline-time">{{ item.createTime }}</div>
             <div class="timeline-title">{{ item.title }}</div>
-            <div v-if="item.content" class="timeline-description">
-              {{ item.content }}
+            <div v-if="item?.content" class="timeline-description" v-html="item?.content">
             </div>
           </div>
-          <div class="middle">{{ typeMap[item?.type?.value as any] }}</div>
+          <div class="middle">{{ typeMap[item?.type as any] }}</div>
           <div class="right" :class="{'selected':currentItem?.id==item?.id}">
             <img class="image" :src="currentItem?.id===item?.id?selectedIcon:item?.url" alt=""></img>
           </div>
@@ -69,7 +68,6 @@ const clickDot=(item:formType)=>{
   
 }
 onMounted(()=>{
-  atricleStore.selectedItem=props?.list[0]??null
   atricleStore.deleteIdList=[]
   currentItem.value=props.list[0] as formType
 })
@@ -151,7 +149,7 @@ onMounted(()=>{
     }
   }
   .left{
-    flex: 2;
+    flex: 1;
     display: flex;
     height: 100%;
     flex-direction: column;
@@ -211,6 +209,28 @@ onMounted(()=>{
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  overflow: hidden;
+  :deep(*),
+  :deep(p),
+  :deep(div) {
+    white-space: inherit !important; // 继承父元素的nowrap，强制单行
+    overflow: inherit !important;    // 继承父元素的hidden
+    text-overflow: inherit !important; // 继承父元素的ellipsis
+    display: inline !important;      // 强制所有子标签为行内元素，避免换行
+    margin: 0 !important;            // 清除wangEditor默认的p标签外边距
+    padding: 0 !important;           // 清除默认内边距
+    line-height: inherit !important; // 继承行高
+    max-width: 100% !important;      // 不超过父容器宽度
+  }
+  // 保留你原有对图片的样式
+  :deep(img),:deep(video) {
+    max-width: 20px !important; // 图片适配单行，缩小显示（可根据需求调整）
+    width: auto !important;
+    height: 16px !important;
+    display: inline-block !important;
+    vertical-align: middle !important;
+    margin: 0 2px !important;
+  }
 }
 .selectRight{
   width: 100px;

@@ -5,7 +5,7 @@
       <h3 v-if="!form?.type" style="color: #444444">
         For Travel Moments, Daily Life Snippets, Precious Memories and Personal Diary
       </h3>
-      <h3 v-else style="color: #444444">{{ typeMap[form?.type?.value] }}</h3>
+      <h3 v-else style="color: #444444">{{ typeMap[(form?.type?.value||form?.type) as any] }}</h3>
     </div>
     <div class="content">
       <div v-if="form && form?.content !== '<p><br></p>'" v-html="form?.content"></div>

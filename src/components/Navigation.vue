@@ -17,7 +17,7 @@
           <div class="tipMode">{{ atricleStore?.deleteIdList?.length?'Multiple Pick':'Single Pick' }}</div>
           <div class="option">
             <button class="btnPage">编辑</button>
-          <button class="btnPage red">删除</button>
+          <button class="btnPage red" @click="handleArticleDelete">删除</button>
           </div>
           
         </div>
@@ -38,21 +38,21 @@
 import icon from "@/assets/icon/svg";
 import { useRoute } from "vue-router";
 import { useArticleStore } from "@/stores/AtricleStore";
-const atricleStore = useArticleStore();
-const route = useRoute();
+import { navigationHooks } from "@/hooks/navigationHooks";
 // 定义 props
 const props = defineProps<{
   isFixed: boolean;
   isCollapse: boolean;
 }>();
-
 // 定义 emits
 const emit = defineEmits<{
   (e: "toggleCollapse"): void;
+  (e:'refreshHome'):void
 }>();
-const saveForm = async () => {
-  console.log("拿到表单信息", atricleStore.articleForm);
-};
+const {saveForm,handleArticleDelete}=navigationHooks(emit)
+const atricleStore = useArticleStore();
+const route = useRoute();
+
 // 处理切换侧边栏
 const handleToggleCollapse = () => {
   emit("toggleCollapse");
