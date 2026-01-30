@@ -1,5 +1,9 @@
 import axios from "axios";
-const instance = axios.create();
+const isDev = import.meta.env.MODE === 'development';
+const instance = axios.create({
+  baseURL:isDev?'http://localhost:3001' 
+    : 'https://119494gm78gm5.vicp.fun'
+});
 instance.interceptors.request.use(function (config:any) {
     // 在发送请求之前做些什么
     const token=localStorage.getItem('token')
