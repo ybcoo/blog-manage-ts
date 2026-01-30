@@ -1,4 +1,4 @@
-import{d as a,c as o,o as t,b as i,t as s,e as r}from"./index-3xnnlXxE.js";import{_ as d}from"./_plugin-vue_export-helper-DlAUqK2U.js";const p=`
+import{d as a,c as o,o as t,b as i,t as s,e as r}from"./index-hce3OBas.js";import{_ as d}from"./_plugin-vue_export-helper-DlAUqK2U.js";const p=`
 <div class="article-demo" style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif; color: #1f2328; line-height: 1.75; word-wrap: break-word;">
   <!-- Cover -->
   <div class="cover" style="width: 100%; border-radius: 14px; overflow: hidden; margin-bottom: 16px;">
@@ -69,7 +69,7 @@ import{d as a,c as o,o as t,b as i,t as s,e as r}from"./index-3xnnlXxE.js";impor
   <div style="margin: 16px 0; border: 1px dashed #d0d7de; border-radius: 10px; padding: 12px; background: #fafafa;">
     <div style="font-size: 14px; color: #6a737d;">Video placeholder</div>
     <video controls style="width: 100%; border-radius: 10px; margin-top: 8px;">
-      <source src="https://interactive-examples.mdn.mozilla.org/media/cc0-videos/flower.mp4" type="video/mp4">
+      <source src="" type="video/mp4">
       Your browser does not support video playback.
     </video>
   </div>
@@ -89,4 +89,4 @@ import{d as a,c as o,o as t,b as i,t as s,e as r}from"./index-3xnnlXxE.js";impor
     <div style="font-size: 13px; color: #6a737d;">Last updated: Jan 2, 2026</div>
   </div>
 </div>
-`,l={class:"review"},c={class:"header"},f={style:{margin:"0"}},g={key:0,style:{color:"#444444"}},x={key:1,style:{color:"#444444"}},m={class:"content"},y=["innerHTML"],h=["innerHTML"],u=a({__name:"Preview",props:{form:{}},setup(e){const n={travel:"For Travel Moments",daily:"For Daily Life Snippets",memory:"For Precious Memories",diary:"For Personal Diary"};return(b,v)=>(t(),o("div",l,[i("div",c,[i("h1",f,s(e.form?.title||"Your title"),1),e.form?.type?(t(),o("h3",x,s(n[e.form?.type?.value]),1)):(t(),o("h3",g," For Travel Moments, Daily Life Snippets, Precious Memories and Personal Diary "))]),i("div",m,[e.form&&e.form?.content!=="<p><br></p>"?(t(),o("div",{key:0,innerHTML:e.form?.content},null,8,y)):(t(),o("div",{key:1,innerHTML:r(p)},null,8,h))])]))}}),z=d(u,[["__scopeId","data-v-6ef807c5"]]);export{z as P};
+`,l={class:"review"},c={class:"header"},f={style:{margin:"0"}},g={key:0,style:{color:"#444444"}},x={key:1,style:{color:"#444444"}},m={class:"content"},y=["innerHTML"],h=["innerHTML"],u=a({__name:"Preview",props:{form:{}},setup(e){const n={travel:"For Travel Moments",daily:"For Daily Life Snippets",memory:"For Precious Memories",diary:"For Personal Diary"};return(b,v)=>(t(),o("div",l,[i("div",c,[i("h1",f,s(e.form?.title||"Your title"),1),e.form?.type?(t(),o("h3",x,s(n[e.form?.type?.value||e.form?.type]),1)):(t(),o("h3",g," For Travel Moments, Daily Life Snippets, Precious Memories and Personal Diary "))]),i("div",m,[e.form&&e.form?.content!=="<p><br></p>"?(t(),o("div",{key:0,innerHTML:e.form?.content},null,8,y)):(t(),o("div",{key:1,innerHTML:r(p)},null,8,h))])]))}}),z=d(u,[["__scopeId","data-v-78aa836e"]]);export{z as P};
