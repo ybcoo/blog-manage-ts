@@ -6,7 +6,8 @@ export const useUserStore = defineStore('user', {
     account:"",
     isGetRouter:false,
     isCollapse:false,
-    avatar:null as null | string
+    avatar:null as null | string,
+    role:null as string | null
   }),
   actions: {
     
@@ -14,6 +15,6 @@ export const useUserStore = defineStore('user', {
   persist: {
     key:'user',
     storage:localStorage,
-    pick:['account','isCollapse','avatar']
+    pick:['account','isCollapse','avatar','role']
   }
 })

@@ -6,6 +6,13 @@ export const login=async(data:any)=>{
         data
     })
 }
+export const register=async(data:any)=>{
+    return await instance.request({
+        url:'/blogApi/register',
+        method:'post',
+        data
+    })
+}
 export const uploadImage=async(data:any)=>{
     return await instance.request({
         url:'/blogApi/upload/image',
@@ -39,5 +46,12 @@ export const deleteArticle=async(data:any)=>{
         url:"/blogApi/deleteArticle",
         method:'post',
         data
+    })
+}
+export const getUser=async(params?:any)=>{
+    return instance.request({
+        url:'/blogApi/getUser',
+        method:"get",
+        params
     })
 }

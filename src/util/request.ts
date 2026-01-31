@@ -1,4 +1,5 @@
 import axios from "axios";
+import router from "@/router";
 const isDev = import.meta.env.MODE === 'development';
 const instance = axios.create({
   baseURL:isDev?'http://localhost:3001' 
@@ -22,6 +23,13 @@ instance.interceptors.response.use(function (response:any) {
   }, function (error:any) {
     // 超出 2xx 范围的状态码都会触发该函数。
     // 对响应错误做点什么
+     const {status}=error.response
+     if(status==401){
+      localStorage.removeItem('token')
+      // window.location.href('/login')
+      router.push('/login')
+      return Promise.resolve(null);
+     }
     return Promise.reject(error);
   });
   export default instance
