@@ -109,7 +109,7 @@ const changeMode=(value:string)=>{
     mode.value=value
 }
 const handleToBlog = () => {
-  window.open("http://localhost:3000", "_blank");
+  window.open("https://ybcoo.github.io/blog", "_blank");
 };
 </script>
 <style lang="scss" scoped>
