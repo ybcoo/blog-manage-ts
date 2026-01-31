@@ -142,6 +142,7 @@ const handleToBlog = () => {
 
 .main {
   flex: 8;
+  padding: 0px 20px;
 }
 
 .setting {
@@ -152,7 +153,9 @@ const handleToBlog = () => {
   width: 100%;
   display: flex;
   flex-direction: column;
-
+  @media(max-height:900px){
+    height: auto;
+  }
   .top {
     flex: 2;
     margin: 16px 16px 8px;
