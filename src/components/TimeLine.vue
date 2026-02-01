@@ -45,6 +45,7 @@ const typeMap: any = {
   daily: "For Daily Life Snippets",
   memory: "For Precious Memories",
   diary: "For Personal Diary",
+  experience:"For My Experience"
 };
 // 定义 props
 const props=defineProps<{

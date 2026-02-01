@@ -5,9 +5,9 @@ const routers=[
         component:()=>import("../views/settings.vue")
     },
     {
-        path:'/profile',
-        name:"profile",
-        component:()=>import("../views/profile.vue")
+        path:'/article',
+        name:"article",
+        component:()=>import("../views/article.vue")
     },
     {
         path:'/home',

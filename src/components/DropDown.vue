@@ -54,7 +54,8 @@ const options = ref<DropdownOption[]>([
   { label: '旅行', value: 'travel' },
   { label: '日常', value: 'daily' },
   { label: '回忆', value: 'memory' },
-  { label: '日记', value: 'diary' }
+  { label: '日记', value: 'diary' },
+  {label:'经历',value:'experience'}
 ])
 
 // 选择选项逻辑

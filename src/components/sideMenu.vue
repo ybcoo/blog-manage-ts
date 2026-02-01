@@ -18,15 +18,15 @@
           <router-link
             class="linkStyle menuStyle"
             :class="{
-              isSelect: route.name === 'profile',
-              hoverBg: route.name !== 'profile',
+              isSelect: route.name === 'article',
+              hoverBg: route.name !== 'article',
             }"
-            to="/profile"
+            to="/article"
           >
             <div class="spanFlash">
               <div class="pic">M</div>
               <span class="flash" v-show="!userStore.isCollapse"
-                >My profile</span
+                >My article</span
               >
             </div>
           </router-link>

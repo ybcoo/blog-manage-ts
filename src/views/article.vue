@@ -1,5 +1,5 @@
 <template>
-  <div class="profileContainer">
+  <div class="articleContainer">
     <div class="left">
       <FishInput v-model="form.title" placeholder="请输入标题"></FishInput>
       <Upload @change="getFile"></Upload>
@@ -66,7 +66,7 @@ const getFile = async (file: any, url: any) => {
 };
 </script>
 <style lang="scss" scoped>
-.profileContainer {
+.articleContainer {
   display: flex;
   width: 100%;
   height: 100%;
