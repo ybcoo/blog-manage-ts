@@ -211,17 +211,17 @@ onMounted(()=>{
   overflow: hidden;
   text-overflow: ellipsis;
   overflow: hidden;
-  :deep(*),
-  :deep(p),
-  :deep(div) {
-    white-space: inherit !important; // 继承父元素的nowrap，强制单行
-    overflow: inherit !important;    // 继承父元素的hidden
-    text-overflow: inherit !important; // 继承父元素的ellipsis
-    display: inline !important;      // 强制所有子标签为行内元素，避免换行
-    margin: 0 !important;            // 清除wangEditor默认的p标签外边距
-    padding: 0 !important;           // 清除默认内边距
-    line-height: inherit !important; // 继承行高
-    max-width: 100% !important;      // 不超过父容器宽度
+  :deep(*){
+     display: inline !important;
+  white-space: nowrap !important;
+  overflow: visible !important;
+  text-overflow: clip !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  line-height: inherit !important;
+  }
+  :deep(br){
+    display: none !important;
   }
   // 保留你原有对图片的样式
   :deep(img),:deep(video) {
