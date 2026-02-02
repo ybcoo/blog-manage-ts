@@ -109,7 +109,7 @@ const changeMode=(value:string)=>{
     mode.value=value
 }
 const handleToBlog = () => {
-  window.open("https://ybcoo.github.io/blog", "_blank");
+  window.open("https://blog.ybcfish.cloud", "_blank");
 };
 </script>
 <style lang="scss" scoped>
