@@ -3,7 +3,7 @@ import router from "@/router";
 const isDev = import.meta.env.MODE === 'development';
 const instance = axios.create({
   baseURL:isDev?'http://localhost:3001' 
-    : 'https://119494gm78gm5.vicp.fun'
+    : 'https://blogapi.ybcfish.cloud'
 });
 instance.interceptors.request.use(function (config:any) {
     // 在发送请求之前做些什么
