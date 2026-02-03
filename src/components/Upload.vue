@@ -131,6 +131,8 @@ onUnmounted(() => {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+   min-width: 120px;
+   min-height: 120px;
 }
 
 .cover-container:hover {

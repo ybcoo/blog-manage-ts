@@ -43,6 +43,7 @@ defineProps<{
   table-layout: fixed;
   background-color: #fff;
   border-radius: 10px;
+  min-width: 530px;
   th,
   td {
     border: 1px solid #f5f5f5;
@@ -50,6 +51,16 @@ defineProps<{
     font-size: 14px;
     padding: 12px;
     white-space: nowrap;
+    overflow: auto;
+    -ms-overflow-style: none;
+    /* IE、旧版 Edge 隐藏滚动条 */
+    scrollbar-width: none;
+    /* Firefox 隐藏滚动条 */
+
+    ::-webkit-scrollbar {
+      display: none;
+      /* Chrome、Safari、Edge 隐藏滚动条 */
+    }
   }
 
   th {

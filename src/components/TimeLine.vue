@@ -6,10 +6,11 @@
         <div v-if="index > 0" class="timeline-line"></div>
 
         <!-- 节点圆圈 -->
-        <div class="timeline-dot" @click="clickDot(item)" :class="{'selected':atricleStore?.deleteIdList?.includes(item?.id as number)}"></div>
+        <div class="timeline-dot" @click="clickDot(item)"
+          :class="{ 'selected': atricleStore?.deleteIdList?.includes(item?.id as number) }"></div>
 
         <!-- 内容卡片 -->
-        <div class="timeline-content" :class="{'selected':currentItem?.id==item?.id}" @click="getClickItem(item)">
+        <div class="timeline-content" :class="{ 'selected': currentItem?.id == item?.id }" @click="getClickItem(item)">
           <div class="left">
             <div class="timeline-time">{{ item.createTime }}</div>
             <div class="timeline-title">{{ item.title }}</div>
@@ -17,11 +18,11 @@
             </div>
           </div>
           <div class="middle">{{ typeMap[item?.type as any] }}</div>
-          <div class="right" :class="{'selected':currentItem?.id==item?.id}">
-            <img class="image" :src="currentItem?.id===item?.id?selectedIcon:item?.url" alt=""></img>
+          <div class="right" :class="{ 'selected': currentItem?.id == item?.id }">
+            <img class="image" :src="currentItem?.id === item?.id ? selectedIcon : item?.url" alt=""></img>
           </div>
         </div>
-        <div v-show="currentItem?.id===item.id" class="selectRight">
+        <div v-show="currentItem?.id === item.id" class="selectRight">
           <img class="selectImage" :src="currentItem?.url" alt=""></img>
         </div>
       </div>
@@ -35,42 +36,42 @@
 <script setup lang="ts">
 import { onMounted, ref } from "vue";
 import Preview from "./Preview.vue";
-import type{formType} from '@/assets/interface/FormInterface'
+import type { formType } from '@/assets/interface/FormInterface'
 import icon from "@/assets/icon/svg";
 import { useArticleStore } from "@/stores/AtricleStore";
 const atricleStore = useArticleStore();
-const {selectedIcon}=icon
+const { selectedIcon } = icon
 const typeMap: any = {
   travel: "For Travel Moments",
   daily: "For Daily Life Snippets",
   memory: "For Precious Memories",
   diary: "For Personal Diary",
-  experience:"For My Experience"
+  experience: "For My Experience"
 };
 // 定义 props
-const props=defineProps<{
+const props = defineProps<{
   list: formType[];
 }>();
 const currentItem = ref<formType | null>(null);
-const getClickItem=(item:formType)=>{
-  currentItem.value=item
-  atricleStore.selectedItem=item
+const getClickItem = (item: formType) => {
+  currentItem.value = item
+  atricleStore.selectedItem = item
 }
-const clickDot=(item:formType)=>{
+const clickDot = (item: formType) => {
   //选中就取消
-  if(atricleStore.deleteIdList.includes(item.id as number)){
-    atricleStore.deleteIdList=atricleStore.deleteIdList.filter((i:number)=>{
-      return i!==item?.id
+  if (atricleStore.deleteIdList.includes(item.id as number)) {
+    atricleStore.deleteIdList = atricleStore.deleteIdList.filter((i: number) => {
+      return i !== item?.id
     })
-  }else{
+  } else {
     // 没选中就添加
     atricleStore.deleteIdList.push(item.id as number)
   }
-  
+
 }
-onMounted(()=>{
-  atricleStore.deleteIdList=[]
-  currentItem.value=props.list[0] as formType
+onMounted(() => {
+  atricleStore.deleteIdList = []
+  currentItem.value = props.list[0] as formType
 })
 </script>
 
@@ -81,6 +82,7 @@ onMounted(()=>{
   padding: 20px;
   display: flex;
   gap: 20px;
+
   .timeline {
     position: relative;
     flex: 1;
@@ -88,13 +90,29 @@ onMounted(()=>{
     display: flex;
     flex-direction: column;
     gap: 20px;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    -ms-overflow-style: none;
+    /* IE、旧版 Edge 隐藏滚动条 */
+    scrollbar-width: none;
+    /* Firefox 隐藏滚动条 */
+
+    ::-webkit-scrollbar {
+      display: none;
+      /* Chrome、Safari、Edge 隐藏滚动条 */
+    }
   }
+
   .preview {
     flex: 1;
     width: 100%;
     background-color: #fff;
     border-radius: 8px;
+
+    @media (max-width: 860px) {
+      display: none;
+    }
   }
 }
 
@@ -114,7 +132,8 @@ onMounted(()=>{
   flex-shrink: 0;
   z-index: 2;
   margin-right: 16px;
-  &.selected{
+
+  &.selected {
     background-color: red;
     opacity: 0.5;
   }
@@ -144,12 +163,14 @@ onMounted(()=>{
   overflow: hidden;
   height: 100px;
   gap: 12px;
-  &.selected{
-    .image{
+
+  &.selected {
+    .image {
       opacity: 1 !important;
     }
   }
-  .left{
+
+  .left {
     flex: 1;
     display: flex;
     height: 100%;
@@ -157,18 +178,22 @@ onMounted(()=>{
     justify-content: space-between;
     overflow: hidden;
   }
-  .middle{
+
+  .middle {
     padding: 0 20px;
     flex: 1;
   }
-  .right{
+
+  .right {
     width: 70px;
     height: 70px;
-    &.selected{
+
+    &.selected {
       width: 20px;
       height: 20px;
     }
-    .image{
+
+    .image {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -176,11 +201,13 @@ onMounted(()=>{
       opacity: 0;
       transition: opacity 0.3s ease;
     }
-    
+
   }
+
   &:hover {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     transform: translateY(-2px);
+
     .image {
       opacity: 1;
     }
@@ -211,20 +238,24 @@ onMounted(()=>{
   overflow: hidden;
   text-overflow: ellipsis;
   overflow: hidden;
-  :deep(*){
-     display: inline !important;
-  white-space: nowrap !important;
-  overflow: visible !important;
-  text-overflow: clip !important;
-  margin: 0 !important;
-  padding: 0 !important;
-  line-height: inherit !important;
+
+  :deep(*) {
+    display: inline !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: inherit !important;
   }
-  :deep(br){
+
+  :deep(br) {
     display: none !important;
   }
+
   // 保留你原有对图片的样式
-  :deep(img),:deep(video) {
+  :deep(img),
+  :deep(video) {
     max-width: 20px !important; // 图片适配单行，缩小显示（可根据需求调整）
     width: auto !important;
     height: 16px !important;
@@ -233,17 +264,19 @@ onMounted(()=>{
     margin: 0 2px !important;
   }
 }
-.selectRight{
+
+.selectRight {
   width: 100px;
   margin: 0 20px;
   // padding: 0 10px;
-    height: 100px;
-    .selectImage{
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 4px;
-      transition: opacity 0.3s ease;
-    }
+  height: 100px;
+
+  .selectImage {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 4px;
+    transition: opacity 0.3s ease;
+  }
 }
 </style>

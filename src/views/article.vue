@@ -84,7 +84,9 @@ const getFile = async (file: any, url: any) => {
     flex: 1;
     height: 100%;
     padding: 0 0 40px 0;
-
+    @media (max-width: 860px) {
+      display: none;
+    }
     .review {
       overflow-y: auto;
       overflow-x: hidden;

@@ -49,6 +49,7 @@ export const loginHooks = () => {
     }
     try {
       const res= await login(loginForm);
+      if (!res) return;
       const {success,code,data}=res?.data
       if (success&&code===0) {
         const {currentToken,role}=data??{}
@@ -75,6 +76,7 @@ export const loginHooks = () => {
     }
     try{
         const res=await register(registerForm)
+        if(!res)return
         const {success,code,data}=res?.data
         if(success&&code===0){
             mode.value='login'

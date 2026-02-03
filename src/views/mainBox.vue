@@ -72,6 +72,7 @@ onUnmounted(() => {
   margin-left: 10px;
   margin-right: 10px;
   flex: 1;
+  overflow: hidden;
 }
 
 .main {
@@ -90,6 +91,7 @@ onUnmounted(() => {
     flex-direction: column;
     justify-content: flex-start;
     overflow-y: auto;
+    overflow-x: hidden;
     width: 100%;
     height: 100%;
     border-radius: 8px;
