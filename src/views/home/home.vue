@@ -14,7 +14,8 @@ const getArticleList=async()=>{
         const res=await getArticle() 
         if(res?.data?.success){
             const {result}=res?.data
-            articleList.value=result
+            const {list,total}=result
+            articleList.value=list
         }
     }catch(e){
         console.error(e)

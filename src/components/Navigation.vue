@@ -13,7 +13,7 @@
       </div>
       <div class="topBar-right" style="flex: 1">
         <div class="save-btn" v-if="route.name == 'article'" @click="saveForm">Save Info</div>
-        <div class="listConfig" v-if="route.name=='home'&& atricleStore?.selectedItem">
+        <div class="listConfig" v-if="route.name=='home'&& (atricleStore?.selectedItem||atricleStore?.deleteIdList?.length)">
           <div class="tipMode">{{ atricleStore?.deleteIdList?.length?'Multiple Pick':'Single Pick' }}</div>
           <div class="option">
             <button class="btnPage">编辑</button>
