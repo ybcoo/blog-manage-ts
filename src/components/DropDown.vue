@@ -9,7 +9,7 @@
         color:'#000'
       }"
     >
-      {{ selectedOption?.label || '请选择类型' }}
+      {{ selectedOption?.label||selectedOption || '请选择类型' }}
       <span class="arrow-icon">▼</span>
     </div>
 
@@ -21,7 +21,7 @@
         class="dropdown-option"
         @click="handleSelect(option)"
         :style="{
-          backgroundColor: option.value === selectedOption?.value ? '#f5f5f5' : '#fff',
+          backgroundColor: option.value === (selectedOption?.value||selectedOption) ? '#f5f5f5' : '#fff',
         }"
       >
         {{ option.label }}
@@ -31,14 +31,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref,onUnmounted, onMounted } from 'vue'
+import { ref,onUnmounted, onMounted,watch } from 'vue'
 const props=defineProps<{
-    modelValue?:any
+    modelValue?:any,
+    options?:any
 }>()
 const emit=defineEmits<{
     (e:'update:modelValue',value:any):any
 }>()
-
 // 定义下拉选项类型
 interface DropdownOption {
   label: string
@@ -50,7 +50,7 @@ const isOpen = ref(false)
 const selectedOption = ref<DropdownOption | null>(null)
 
 // 下拉选项列表（可自定义）
-const options = ref<DropdownOption[]>([
+const options = ref<DropdownOption[]>(props.options||[
   { label: '旅行', value: 'travel' },
   { label: '日常', value: 'daily' },
   { label: '回忆', value: 'memory' },
@@ -62,7 +62,7 @@ const options = ref<DropdownOption[]>([
 const handleSelect = (option: DropdownOption) => {
   selectedOption.value = option
   isOpen.value = false
-  emit('update:modelValue',option)
+  emit('update:modelValue',option.value)
   // 可选：抛出选择事件供父组件使用
   // emit('change', option)
 }

@@ -2,11 +2,11 @@ import { reactive, ref } from "vue";
 import { useRouter } from "vue-router";
 import { Message } from "@arco-design/web-vue";
 import { useUserStore } from "@/stores/UserStore.js";
-import { login,register } from "../api/api.js";
+import { login, register } from "../api/api.js";
 export const loginHooks = () => {
   const router = useRouter();
   const mode = ref("login");
-  const userStore=useUserStore()
+  const userStore = useUserStore();
   const loginForm = reactive({
     account: "",
     password: "",
@@ -48,17 +48,19 @@ export const loginHooks = () => {
       return;
     }
     try {
-      const res= await login(loginForm);
+      const res = await login(loginForm);
       if (!res) return;
-      const {success,code,data}=res?.data
-      if (success&&code===0) {
-        const {currentToken,role}=data??{}
-        currentToken&&localStorage.setItem('token',currentToken)
-        role&&(userStore.role=role)
+      const { success, code, data } = res?.data;
+      if (success && code === 0) {
+        const { currentToken, role, id } = data ?? {};
+        //存储用户id
+        userStore.userId = id;
+        currentToken && localStorage.setItem("token", currentToken);
+        role && (userStore.role = role);
         router.push("/mainBox");
-      }else{
-        const {message}=data
-        Message.error(message)
+      } else {
+        const { message } = data;
+        Message.error(message);
       }
     } catch (e) {
       console.error(e);
@@ -67,25 +69,25 @@ export const loginHooks = () => {
   };
   const handleRegister = async (e: any) => {
     getRipple(e);
-    if(!registerForm.account || !registerForm.password){
-        Message.error("请输入账号和密码");
-        return;
-    }else if(!registerForm.confirmPassword){
-        Message.error('请确认密码')
-        return
+    if (!registerForm.account || !registerForm.password) {
+      Message.error("请输入账号和密码");
+      return;
+    } else if (!registerForm.confirmPassword) {
+      Message.error("请确认密码");
+      return;
     }
-    try{
-        const res=await register(registerForm)
-        if(!res)return
-        const {success,code,data}=res?.data
-        if(success&&code===0){
-            mode.value='login'
-        }else{
-            const {message}=data
-            Message.error(message)
-        }
-    }catch(e){
-        console.error(e)
+    try {
+      const res = await register(registerForm);
+      if (!res) return;
+      const { success, code, data } = res?.data;
+      if (success && code === 0) {
+        mode.value = "login";
+      } else {
+        const { message } = data;
+        Message.error(message);
+      }
+    } catch (e) {
+      console.error(e);
     }
   };
   return { mode, loginForm, registerForm, handleLogin, handleRegister };

@@ -9,7 +9,7 @@
     </thead>
     <tbody>
       <!-- 每个 row 渲染一行 -->
-      <tr v-for="(row, rowIndex) in list" :key="rowIndex">
+      <tr v-for="(row, rowIndex) in list" :key="rowIndex" @click="clickItem(row)">
         <!-- 每一列 -->
         <td v-for="item in columns" :key="item.key">
           <!-- 优先使用对应列的插槽：cell-列key -->
@@ -22,18 +22,36 @@
           >
             <!-- 没有提供插槽时的默认渲染 -->
             {{ row[item.key] }}
+            
           </slot>
         </td>
       </tr>
     </tbody>
+    <PopUp v-model="showPop" v-model:popItem="tempItem" @updateUser="emit('updateUser',tempItem);showPop=false"></PopUp>
   </table>
 </template>
 
 <script setup lang="ts">
+import { ref } from 'vue';
+import PopUp from './PopUp.vue';
+import { useUserStore } from '@/stores/UserStore';
+const userStore=useUserStore()
 defineProps<{
     columns:any,
     list:any
 }>()
+const emit = defineEmits<{
+  (e:'updateUser',value:any):void
+}>()
+const tempItem=ref<any>(null)
+const showPop=ref(false)
+const clickItem=(row:any)=>{
+  if(userStore.role!=='admin'){
+    return
+  }
+  tempItem.value=row
+  showPop.value=!showPop.value
+}
 </script>
 
 <style lang="scss" scoped>
@@ -44,6 +62,7 @@ defineProps<{
   background-color: #fff;
   border-radius: 10px;
   min-width: 530px;
+  position: relative;
   th,
   td {
     border: 1px solid #f5f5f5;
