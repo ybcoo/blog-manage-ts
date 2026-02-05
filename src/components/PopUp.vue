@@ -52,7 +52,7 @@ const emit = defineEmits<{
   width: 20%;
   min-width: 300px;
   aspect-ratio: 1;
-  background-color: #f5f5f5;
+  background-color: rgba(0, 0, 0, 0.4); 
   border-radius: 12px;
   top: 50%;
   left: 50%;
@@ -66,6 +66,7 @@ const emit = defineEmits<{
     padding: 20px;
     display: flex;
     justify-content: center;
+    color: white;
     font-weight: 600;
   }
   .middle {
