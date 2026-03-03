@@ -1,5 +1,5 @@
 export interface formType {
-  id?: number;
+  id?: number|null;
   createTime?: string;
   type?: { label: string; value: string } | null
   ;

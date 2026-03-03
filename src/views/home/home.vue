@@ -8,6 +8,8 @@ import TimeLine from '@/components/TimeLine.vue';
 import { onMounted, ref } from 'vue';
 import type{formType} from '@/assets/interface/FormInterface'
 import { getArticle } from '@/api/api';
+import { useArticleStore } from '@/stores/AtricleStore';
+const atricleStore=useArticleStore()
 const articleList = ref<formType[]>([]);
 const getArticleList=async()=>{
     try{
@@ -22,6 +24,7 @@ const getArticleList=async()=>{
     }
 }
 onMounted(async()=>{
+    atricleStore.initState()
     await getArticleList()
 })
 defineExpose({

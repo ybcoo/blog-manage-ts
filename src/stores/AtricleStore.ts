@@ -7,7 +7,9 @@ export const useArticleStore = defineStore('article', {
     deleteIdList:[] as number[]
   }),
   actions: {
-    
+    initState(){
+      this.selectedItem=null
+    }
   },
   persist:true
 })

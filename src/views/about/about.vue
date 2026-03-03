@@ -9,6 +9,9 @@
             style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover"
           />
         </template>
+        <template #createTime="{ row }">
+            {{ formatDateYMD(row?.createTime) }}
+        </template>
         <template #operation="{ row }">
             <button class="pageBtn" @click.stop="handleDelete(row.id)">Delete</button>
         </template>
@@ -25,6 +28,8 @@
 import TableA from "@/components/TableA.vue";
 import { getUser,deleteUser,updateUser } from "@/api/api";
 import { onMounted, ref } from "vue";
+import {timeHooks} from '@/hooks/timeHooks' 
+const {formatDateYMD}=timeHooks()
 import icon from "@/assets/icon/svg";
 import { useUserStore } from "@/stores/UserStore";
 import { Message } from "@arco-design/web-vue";

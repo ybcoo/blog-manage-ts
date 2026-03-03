@@ -12,11 +12,17 @@
           </div>
       </div>
       <div class="topBar-right" style="flex: 1">
-        <div class="save-btn" v-if="route.name == 'article'" @click="saveForm">Save Info</div>
+        <div class="save-btn" v-if="(route.name == 'article')&&(!route?.query?.id)" @click="saveForm">Save Info</div>
+        <div class="save-btn" v-else-if="route.name == 'article'" @click="updateForm">Update Info</div>
         <div class="listConfig" v-if="route.name=='home'&& (atricleStore?.selectedItem||atricleStore?.deleteIdList?.length)">
           <div class="tipMode">{{ atricleStore?.deleteIdList?.length?'Multiple Pick':'Single Pick' }}</div>
           <div class="option">
-            <button class="btnPage">编辑</button>
+            <button class="btnPage" @click="router.push({
+              path:'/article',
+              query:{
+                id:atricleStore?.selectedItem?.id
+              }
+            })">编辑</button>
           <button class="btnPage red" @click="handleArticleDelete">删除</button>
           </div>
           
@@ -39,6 +45,7 @@ import icon from "@/assets/icon/svg";
 import { useRoute } from "vue-router";
 import { useArticleStore } from "@/stores/AtricleStore";
 import { navigationHooks } from "@/hooks/navigationHooks";
+import router from "@/router";
 // 定义 props
 const props = defineProps<{
   isFixed: boolean;
@@ -49,8 +56,8 @@ const emit = defineEmits<{
   (e: "toggleCollapse"): void;
   (e:'refreshHome'):void
 }>();
-const {saveForm,handleArticleDelete}=navigationHooks(emit)
-const atricleStore = useArticleStore();
+const {saveForm,handleArticleDelete,updateForm}=navigationHooks(emit)
+const atricleStore:any = useArticleStore();
 const route = useRoute();
 
 // 处理切换侧边栏

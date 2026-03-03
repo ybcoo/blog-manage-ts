@@ -2,7 +2,7 @@
   <div class="articleContainer">
     <div class="left">
       <FishInput v-model="form.title" placeholder="请输入标题"></FishInput>
-      <Upload @change="getFile"></Upload>
+      <Upload v-model="form.url" @change="getFile"></Upload>
       <DropDown v-model="form.type"></DropDown>
       <Editor v-model="form.content"></Editor>
     </div>
@@ -29,14 +29,17 @@ import Editor from "@/components/Editor.vue";
 import DropDown from "@/components/DropDown.vue";
 import FishInput from "@/components/FishInput.vue";
 import Upload from "@/components/Upload.vue";
-import { computed, reactive, watch } from "vue";
+import { useRoute } from "vue-router";
+import { computed, onMounted, reactive, watch } from "vue";
 import { defaultHtml } from "@/util/tools";
 import Preview from "@/components/Preview.vue";
 import { uploadImage } from "@/api/api";
-import { useArticleStore  } from "@/stores/AtricleStore";
-import type{formType} from '@/assets/interface/FormInterface'
-const atricleStore=useArticleStore()
+import { useArticleStore } from "@/stores/AtricleStore";
+import type { formType } from "@/assets/interface/FormInterface";
+const route = useRoute();
+const atricleStore = useArticleStore();
 const form = reactive<formType>({
+  id:null,
   type: null,
   title: "",
   file: null,
@@ -47,10 +50,18 @@ const form = reactive<formType>({
 watch(
   () => form,
   (newVal, oldVal) => {
-    atricleStore.articleForm=newVal
-    // console.log('监听form',newVal)
-  },{deep:true}
+    atricleStore.articleForm = newVal;
+  },
+  { immediate: true, deep: true },
 );
+onMounted(() => {
+  const id = route.query.id;
+  if (id) {
+    //编辑
+    const item = atricleStore.selectedItem;
+    Object.assign(form, item);
+  }
+});
 const getFile = async (file: any, url: any) => {
   form.file = file;
   const fd = new FormData();

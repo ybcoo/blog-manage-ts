@@ -57,7 +57,13 @@ const options = ref<DropdownOption[]>(props.options||[
   { label: '日记', value: 'diary' },
   {label:'经历',value:'experience'}
 ])
-
+const mapper : Record<string,any>={
+  travel:'旅行',
+  daily:'日常',
+  memory:'回忆',
+  diary:'日记',
+  experience:'经历'
+}
 // 选择选项逻辑
 const handleSelect = (option: DropdownOption) => {
   selectedOption.value = option
@@ -74,7 +80,9 @@ const clickOutside = (e: MouseEvent) => {
     isOpen.value = false
   }
 }
-
+watch(()=>props.modelValue,(newVal,oldVal)=>{
+  selectedOption.value=options.value.find((i)=>i.value===newVal) as DropdownOption
+})
 // 监听点击事件
 document.addEventListener('click', clickOutside)
 // 组件卸载时移除监听

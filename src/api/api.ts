@@ -34,6 +34,13 @@ export const createArticle = async (data: any) => {
     data,
   });
 };
+export const updateArticle=async(data:any)=>{
+  return await instance.request({
+    url:'/blogApi/updateArticle',
+    method:'post',
+    data
+  })
+}
 export const getArticle = async (params?: any) => {
   return await instance.request({
     url: "/blogApi/getArticle",

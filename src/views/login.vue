@@ -1,6 +1,7 @@
 <template>
-  <div id="login" :style="{ backgroundImage: `url(${backImg})`, backgroundSize: 'cover' }">
-    <!-- <video class="bg-video" src="https://pixabay.com/videos/download/video-141984_medium.mp4" autoplay loop muted playsinline></video> -->
+  <!-- :style="{ backgroundImage: `url(${backImg})`, backgroundSize: 'cover' }" -->
+  <div id="login" >
+    <video class="bg-video" src="https://file.ybcfish.cloud/snow.mp4" autoplay loop muted playsinline></video>
     <div class="header"></div>
     <div class="main flexCenter">
         <Transition name="login">
@@ -146,7 +147,8 @@ const handleToBlog = () => {
 }
 
 .setting {
-  background-color: white;
+  // background-color: white;
+  background: rgb(255, 255, 255,0.8);
   border-radius: 8px;
   height: 60%;
   max-width: 420px;
@@ -236,7 +238,8 @@ const handleToBlog = () => {
   font-size: 16px;
   pointer-events: none;
   padding: 0 6px;
-  background: white;
+  background: rgb(255, 255, 255,0.8);
+  border-radius: 8px;
   transition:
     top 0.2s ease-in-out,
     font-size 0.2s ease-in-out,
@@ -246,7 +249,7 @@ const handleToBlog = () => {
 
 /*确保 :not() 格式正确，逗号后加空格 */
 .floating-input:focus {
-  border: 1px solid black;
+  border: 1px solid rgb(0,0, 0,0.8);
   transition:
     box-shadow 0.2s ease-in-out,
     border-color 0.2s ease-in-out;

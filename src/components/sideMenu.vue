@@ -89,10 +89,10 @@
         }"
         to="/share"
       >
-        <div class="spanFlash">
+        <!-- <div class="spanFlash">
           <div class="pic">S</div>
           <span class="flash" v-show="!userStore.isCollapse">Share</span>
-        </div>
+        </div> -->
       </router-link>
     </nav>
   </div>

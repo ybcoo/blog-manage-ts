@@ -35,6 +35,9 @@ const valueHtml = ref<string>(props.modelValue || "");
 watch(
   () => props.modelValue,
   (newVal, oldVal) => {
+    const editor = editorRef.value;
+    if(editor)
+    editor.setHtml(newVal)
     valueHtml.value = newVal as string;
   }
 );
@@ -86,6 +89,7 @@ onBeforeUnmount(() => {
 
 const handleCreated = (editor: any) => {
   editorRef.value = editor; // 记录 editor 实例，重要！
+  editor.setHtml(valueHtml.value)
 };
 const handleChange = () => {
   emit("update:modelValue", valueHtml.value);

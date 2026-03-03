@@ -34,7 +34,7 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
+import { onMounted, ref,watch } from "vue";
 import Preview from "./Preview.vue";
 import type { formType } from '@/assets/interface/FormInterface'
 import icon from "@/assets/icon/svg";
@@ -53,6 +53,9 @@ const props = defineProps<{
   list: formType[];
 }>();
 const currentItem = ref<formType | null>(null);
+watch(()=>props.list,(newList,oldList)=>{
+  currentItem.value=null
+},{immediate:true,deep:true})
 const getClickItem = (item: formType) => {
   currentItem.value = item
   atricleStore.selectedItem = item
@@ -71,7 +74,6 @@ const clickDot = (item: formType) => {
 }
 onMounted(() => {
   atricleStore.deleteIdList = []
-  currentItem.value = props.list[0] as formType
 })
 </script>
 
