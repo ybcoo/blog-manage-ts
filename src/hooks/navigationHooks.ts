@@ -50,6 +50,7 @@ export const navigationHooks = (emit?:any) => {
       Message.error('访客暂无权限～')
       return
     }
+    atricleStore.currentPage=1;
     try{
       let data:any=null
       if(atricleStore?.deleteIdList?.length>0){
@@ -67,5 +68,19 @@ export const navigationHooks = (emit?:any) => {
       console.error(e)
     }
   }
-  return { saveForm,handleArticleDelete,updateForm };
+  const lastArticlePage=()=>{
+    if(atricleStore.currentPage==1){
+      return
+    }
+    atricleStore.currentPage--;
+    emit('refreshHome')
+  }
+  const nextArticlePage=()=>{
+    if(atricleStore.currentPage==atricleStore.total){
+      return
+    }
+    atricleStore.currentPage++;
+    emit('refreshHome')
+  }
+  return { saveForm,handleArticleDelete,updateForm,lastArticlePage,nextArticlePage };
 };

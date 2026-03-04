@@ -6,9 +6,9 @@
           <img :src="isCollapse ? icon.collapseSelect : icon.collapseDefault" alt="collapse" />
         </div>
         <div v-if="route.name=='home'" class="listButton">
-            <button class="btnPage">last</button>
-            <span>{{'1/1'}}</span>
-            <button class="btnPage">next</button>
+            <button class="btnPage" @click="lastArticlePage">last</button>
+            <span>{{`${atricleStore.currentPage}/${atricleStore.total}`}}</span>
+            <button class="btnPage" @click="nextArticlePage">next</button>
           </div>
       </div>
       <div class="topBar-right" style="flex: 1">
@@ -56,7 +56,7 @@ const emit = defineEmits<{
   (e: "toggleCollapse"): void;
   (e:'refreshHome'):void
 }>();
-const {saveForm,handleArticleDelete,updateForm}=navigationHooks(emit)
+const {saveForm,handleArticleDelete,updateForm,lastArticlePage,nextArticlePage}=navigationHooks(emit)
 const atricleStore:any = useArticleStore();
 const route = useRoute();
 

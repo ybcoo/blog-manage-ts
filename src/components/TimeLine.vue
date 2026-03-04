@@ -12,7 +12,7 @@
         <!-- 内容卡片 -->
         <div class="timeline-content" :class="{ 'selected': currentItem?.id == item?.id }" @click="getClickItem(item)">
           <div class="left">
-            <div class="timeline-time">{{ item.createTime }}</div>
+            <div class="timeline-time">{{ formatDateYMD(item.createTime) }}</div>
             <div class="timeline-title">{{ item.title }}</div>
             <div v-if="item?.content" class="timeline-description" v-html="item?.content">
             </div>
@@ -40,6 +40,8 @@ import type { formType } from '@/assets/interface/FormInterface'
 import icon from "@/assets/icon/svg";
 import { useArticleStore } from "@/stores/AtricleStore";
 const atricleStore = useArticleStore();
+import {timeHooks} from '@/hooks/timeHooks'
+const {formatDateYMD}=timeHooks()
 const { selectedIcon } = icon
 const typeMap: any = {
   travel: "For Travel Moments",

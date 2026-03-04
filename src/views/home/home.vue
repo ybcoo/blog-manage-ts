@@ -13,10 +13,11 @@ const atricleStore=useArticleStore()
 const articleList = ref<formType[]>([]);
 const getArticleList=async()=>{
     try{
-        const res=await getArticle() 
+        const res=await getArticle({pageNum:atricleStore.currentPage,pageSize:10}) 
         if(res?.data?.success){
             const {result}=res?.data
             const {list,total}=result
+            atricleStore.total=Math.ceil(total/10)
             articleList.value=list
         }
     }catch(e){
