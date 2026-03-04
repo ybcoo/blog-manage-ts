@@ -1,0 +1,1 @@
+const s=()=>{function e(r){const t=new Date(Number(r));if(Number.isNaN(t.getTime()))return"";const n=t.getFullYear(),a=String(t.getMonth()+1).padStart(2,"0"),o=String(t.getDate()).padStart(2,"0");return`${n}-${a}-${o}`}return{formatDateYMD:e}};export{s as t};
