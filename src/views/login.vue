@@ -1,6 +1,7 @@
 <template>
   <!-- :style="{ backgroundImage: `url(${backImg})`, backgroundSize: 'cover' }" -->
-  <div id="login" >
+   <video v-show="!showPage" class="start-video" src="https://file.ybcfish.cloud/loadingStart.mp4" autoplay muted playsinline></video>
+  <div id="login" v-show="showPage">
     <video class="bg-video" src="https://file.ybcfish.cloud/snow.mp4" autoplay loop muted playsinline></video>
     <div class="header"></div>
     <div class="main flexCenter">
@@ -97,10 +98,10 @@
 </template>
 <script setup lang="ts">
 import backImg from "@/assets/image.png";
-import { reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 
 import { loginHooks } from "@/hooks/loginHooks.js";
-
+const showPage=ref(false)
 const {mode,loginForm,registerForm,handleLogin,handleRegister}=loginHooks()
 
 const accountLabel = ref("Account");
@@ -112,8 +113,22 @@ const changeMode=(value:string)=>{
 const handleToBlog = () => {
   window.open("https://blog.ybcfish.cloud", "_blank");
 };
+onMounted(()=>{
+  setTimeout(()=>{
+    showPage.value=true
+  },5000)
+})
 </script>
 <style lang="scss" scoped>
+.start-video{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
 #login {
   width: 100%;
   height: 100%;
