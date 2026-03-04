@@ -1,1 +1,0 @@
-import{O as e}from"./index-BrRBA6z0.js";const l=e("article",{state:()=>({articleForm:null,selectedItem:null,deleteIdList:[]}),actions:{initState(){this.selectedItem=null}},persist:!0});export{l as u};
