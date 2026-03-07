@@ -1,1 +1,0 @@
-import{O as e}from"./index-D_8U7knh.js";const l=e("article",{state:()=>({articleForm:null,selectedItem:null,deleteIdList:[],total:null,currentPage:null}),actions:{initState(){this.currentPage=1,this.selectedItem=null}},persist:!0});export{l as u};
