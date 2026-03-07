@@ -52,9 +52,10 @@ export const loginHooks = () => {
       if (!res) return;
       const { success, code, data } = res?.data;
       if (success && code === 0) {
-        const { currentToken, role, id } = data ?? {};
+        const { currentToken, role, id, url } = data ?? {};
         //存储用户id
         userStore.userId = id;
+        userStore.avatar = url;
         currentToken && localStorage.setItem("token", currentToken);
         role && (userStore.role = role);
         router.push("/mainBox");

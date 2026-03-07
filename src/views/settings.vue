@@ -132,6 +132,7 @@
 import { IconEdit, IconUser } from "@arco-design/web-vue/es/icon";
 import { reactive,ref } from "vue";
 import { useUserStore } from "@/stores/UserStore";
+import { uploadImage,updateUser } from "@/api/api";
 const userStore=useUserStore()
 const vRipple = {
   mounted(el: any) {
@@ -185,10 +186,21 @@ const infoForm:any = reactive({
   confirmPassword: "",
   file:null
 });
-const onChange=(_:any,fileItem:any)=>{
+
+const onChange=async(_:any,fileItem:any)=>{
   infoForm.file=fileItem?.file
   userStore.avatar = URL.createObjectURL(fileItem?.file)
-  
+  const fd=new FormData()
+  fd.append('file',fileItem?.file)
+  try{
+    const res=await uploadImage(fd)
+    const urlRes=res?.data?.url
+    userStore.avatar=urlRes
+    const updateRes=await updateUser({url:urlRes,userId:userStore.userId})
+    //可以增加更新成功的交互
+  }catch(e){
+    console.error(e)
+  }
 }
 </script>
 <style lang="scss" scoped>
