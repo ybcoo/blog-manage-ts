@@ -76,3 +76,24 @@ export const updateUser = async (data?: any) => {
     data,
   });
 };
+export const updatePassword=async(data:any)=>{
+  return await instance.request({
+    url:"/blogApi/updatePassword",
+    method:'post',
+    data
+  })
+}
+export const updateConfig=async(data:any)=>{
+  return await instance.request({
+    url:'/blogApi/updateConfig',
+    method:'post',
+    data
+  })
+}
+export const getConfig=async(params?:any)=>{
+  return await instance.request({
+    url:'/blogApi/getConfig',
+    method:'get',
+    params
+  })
+}

@@ -31,41 +31,41 @@
       <div class="row">
         <div class="left">
           <span class="label">First Name</span>
-          <input type="text" class="border-none input" placeholder="Your name" />
+          <input type="text" v-model="infoForm.firstName" class="border-none input" placeholder="Your name" />
         </div>
         <div class="right">
           <span class="label">Last Name</span>
-          <input type="text" class="border-none input" placeholder="Your name" />
+          <input type="text" v-model="infoForm.lastName" class="border-none input" placeholder="Your name" />
         </div>
       </div>
       <div class="row">
         <div class="left">
           <span class="label">Email</span>
-          <input type="text" class="border-none input" placeholder="example@email.com" />
+          <input type="text" v-model="infoForm.email" class="border-none input" placeholder="example@email.com" />
         </div>
         <div class="right">
           <span class="label">Gender</span>
-          <input type="text" class="border-none input" placeholder="select" />
+          <input type="text" v-model="infoForm.gender" class="border-none input" placeholder="select" />
         </div>
       </div>
       <div class="row">
         <div class="left">
           <span class="label">Location</span>
-          <input type="text" class="border-none input" placeholder="China,Hang Zhou" />
+          <input type="text" v-model="infoForm.location" class="border-none input" placeholder="China,Hang Zhou" />
         </div>
         <div class="right">
           <span class="label">Phone Number</span>
-          <input type="text" class="border-none input" placeholder="+86 16666666666" />
+          <input type="text" v-model="infoForm.phoneNumber" class="border-none input" placeholder="+86 16666666666" />
         </div>
       </div>
       <div class="row">
         <div class="left">
           <span class="label">Role</span>
-          <input type="text" class="border-none input" placeholder="CEO" />
+          <input type="text" v-model="infoForm.role" class="border-none input" placeholder="CEO" />
         </div>
         <div class="right">
           <div class="btnContainer">
-            <button class="btn defaultBtn" v-ripple>Save Info</button>
+            <button class="btn defaultBtn" v-ripple @click="saveInfo(infoForm)">Save Info</button>
           </div>
         </div>
       </div>
@@ -77,7 +77,7 @@
       <div class="row">
         <div class="input-container">
           <input
-            type="text"
+            type="password"
             class="floating-input"
             v-model="infoForm.currentPassword"
             placeholder=""
@@ -88,7 +88,7 @@
       <div class="row">
         <div class="input-container">
           <input
-            type="text"
+            type="password"
             class="floating-input"
             v-model="infoForm.newPassword"
             placeholder=""
@@ -99,7 +99,7 @@
       <div class="row">
         <div class="input-container">
           <input
-            type="text"
+            type="password"
             class="floating-input"
             v-model="infoForm.confirmPassword"
             placeholder=""
@@ -121,7 +121,7 @@
         </div>
         <div class="right">
           <div class="btnContainer">
-            <button class="btn defaultBtn" v-ripple>Save Password</button>
+            <button class="btn defaultBtn" v-ripple @click="savePassword(infoForm)">Save Password</button>
           </div>
         </div>
       </div>
@@ -130,9 +130,10 @@
 </template>
 <script setup lang="ts">
 import { IconEdit, IconUser } from "@arco-design/web-vue/es/icon";
-import { reactive,ref } from "vue";
+import { onMounted, reactive,ref } from "vue";
 import { useUserStore } from "@/stores/UserStore";
-import { uploadImage,updateUser } from "@/api/api";
+import { uploadImage,updateUser,updatePassword, updateConfig, getConfig } from "@/api/api";
+import { Message } from "@arco-design/web-vue";
 const userStore=useUserStore()
 const vRipple = {
   mounted(el: any) {
@@ -181,6 +182,14 @@ const vRipple = {
   },
 };
 const infoForm:any = reactive({
+  firstName:"",
+  lastName:'',
+  email:"",
+  gender:"",
+  location:'',
+  phoneNumber:"",
+  role:"",
+  userId:userStore.userId,
   currentPassword: "",
   newPassword: "",
   confirmPassword: "",
@@ -202,6 +211,45 @@ const onChange=async(_:any,fileItem:any)=>{
     console.error(e)
   }
 }
+const saveInfo=async(infoForm:any)=>{
+  try{
+    const res=await updateConfig(infoForm)
+    if(res?.data?.success){
+      Message.success('更新成功')
+    }
+  }catch(e){
+    console.error(e)
+  }
+}
+const savePassword=async(infoForm:any)=>{
+  if(infoForm.newPassword!==infoForm.confirmPassword){
+    Message.error('新密码与确认密码不一致')
+    return
+  }
+  try{
+    const res=await updatePassword(infoForm)
+    if(res?.data?.code==0){
+      Message.success('更新成功')
+    }else{
+      Message.error(`${res?.data?.data?.message}`)
+    }
+    // console.log(res)
+  }catch(e){
+    console.error(e)
+  }
+}
+onMounted(async()=>{
+  try{
+    const res=await getConfig(infoForm)
+    if(res?.data?.success){
+      const result=res?.data?.result
+      Object.assign(infoForm,result)
+    }
+  }catch(e){
+    console.error(e)
+  }
+  
+})
 </script>
 <style lang="scss" scoped>
 ul {
