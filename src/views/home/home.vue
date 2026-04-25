@@ -1,6 +1,7 @@
 <template>
     <div class="home">
         <TimeLine :list="articleList"></TimeLine>
+        <Loading v-show="showLoading"/>
     </div>
 </template>
 <script setup lang="ts">
@@ -9,10 +10,13 @@ import { onMounted, ref } from 'vue';
 import type{formType} from '@/assets/interface/FormInterface'
 import { getArticle } from '@/api/api';
 import { useArticleStore } from '@/stores/AtricleStore';
+import Loading from '@/components/Loading.vue';
+const showLoading=ref(false)
 const atricleStore=useArticleStore()
 const articleList = ref<formType[]>([]);
 const getArticleList=async()=>{
     try{
+        showLoading.value=true
         const res=await getArticle({pageNum:atricleStore.currentPage,pageSize:10}) 
         if(res?.data?.success){
             const {result}=res?.data
@@ -22,6 +26,8 @@ const getArticleList=async()=>{
         }
     }catch(e){
         console.error(e)
+    }finally{
+        showLoading.value=false
     }
 }
 onMounted(async()=>{

@@ -10,10 +10,10 @@
           />
         </template>
         <template #createTime="{ row }">
-            {{ formatDateYMD(row?.createTime) }}
+          {{ formatDateYMD(row?.createTime) }}
         </template>
         <template #operation="{ row }">
-            <button class="pageBtn" @click.stop="handleDelete(row.id)">Delete</button>
+          <button class="pageBtn" @click.stop="handleDelete(row.id)">Delete</button>
         </template>
       </TableA>
     </div>
@@ -22,18 +22,21 @@
       <span>{{ pageNum }}/{{ totalPage }}</span>
       <button class="pageBtn" :disabled="pageNum === totalPage" @click="nextPage">next</button>
     </div>
+    <Loading v-show="showLoading" />
   </div>
 </template>
 <script setup lang="ts">
 import TableA from "@/components/TableA.vue";
-import { getUser,deleteUser,updateUser } from "@/api/api";
+import { getUser, deleteUser, updateUser } from "@/api/api";
 import { onMounted, ref } from "vue";
-import {timeHooks} from '@/hooks/timeHooks' 
-const {formatDateYMD}=timeHooks()
+import { timeHooks } from "@/hooks/timeHooks";
+const { formatDateYMD } = timeHooks();
 import icon from "@/assets/icon/svg";
 import { useUserStore } from "@/stores/UserStore";
 import { Message } from "@arco-design/web-vue";
-const userStore=useUserStore()
+import Loading from "@/components/Loading.vue";
+const userStore = useUserStore();
+const showLoading = ref(false);
 const { userAvatar } = icon;
 const columns: Record<string, any>[] = [
   { label: "ID", key: "id" },
@@ -52,6 +55,7 @@ const pageSize = ref(10);
 const list = ref<any>([]);
 const getUserList = async () => {
   try {
+    showLoading.value = true;
     const res = await getUser({ pageNum: pageNum.value, pageSize: pageSize.value });
     const { code, data } = res.data;
     const { list: resList, total } = data ?? {};
@@ -61,34 +65,42 @@ const getUserList = async () => {
     }
   } catch (e) {
     console.error(e);
+  } finally {
+    showLoading.value = false;
   }
 };
-const handleDelete=async(id:number)=>{
-    try{
-        const res=await deleteUser({id,isDelete:1,userId:userStore.userId})
-        const {code,data}=res.data
-        if(code===0){
-        pageNum.value=1
-          await getUserList()
-        }
-    }catch(e){
-        console.error(e)
+const handleDelete = async (id: number) => {
+  try {
+    showLoading.value = true;
+    const res = await deleteUser({ id, isDelete: 1, userId: userStore.userId });
+    const { code, data } = res.data;
+    if (code === 0) {
+      pageNum.value = 1;
+      await getUserList();
     }
-}
-const handleUpdate=async({id,account,role}:any={})=>{
-    try{
-        const res=await updateUser({id,userId:userStore.userId,account,role})
-        const {code,data}=res.data
-        if(code===0){
-        pageNum.value=1
-          await getUserList()
-        }else if(data?.message){
-            Message.error(data.message)
-        }
-    }catch(e){
-        console.error(e)
+  } catch (e) {
+    console.error(e);
+  } finally {
+    showLoading.value = false;
+  }
+};
+const handleUpdate = async ({ id, account, role }: any = {}) => {
+  try {
+    showLoading.value = true;
+    const res = await updateUser({ id, userId: userStore.userId, account, role });
+    const { code, data } = res.data;
+    if (code === 0) {
+      pageNum.value = 1;
+      await getUserList();
+    } else if (data?.message) {
+      Message.error(data.message);
     }
-}
+  } catch (e) {
+    console.error(e);
+  } finally {
+    showLoading.value = false;
+  }
+};
 const lastPage = () => {
   if (pageNum.value > 1) {
     pageNum.value -= 1;
@@ -127,42 +139,41 @@ onMounted(async () => {
     display: flex;
     gap: 10px;
     align-items: center;
-    
   }
   .pageBtn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      &:disabled {
-        opacity: 0.5;
-        cursor: not-allowed;
-      }
-      padding: 8px 20px;
-      border-radius: 8px; // 圆角胶囊按钮
-      border: 1px solid rgba(0, 0, 0, 0.08);
-
-      background-color: #fff;
-      color: #000; // 保持你现在的字体颜色
-      font-size: 14px;
-      font-weight: 500;
-
-      cursor: pointer;
-      user-select: none;
-
-      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
-      transition: all 0.18s ease-out;
-
-      &:hover {
-        box-shadow: 0 4px 10px rgba(15, 23, 42, 0.14);
-        transform: translateY(-1px);
-      }
-
-      &:active:not(:disabled) {
-        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.16);
-        transform: translateY(0);
-        background-color: #000;
-        color: #fff;
-      }
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
     }
+    padding: 8px 20px;
+    border-radius: 8px; // 圆角胶囊按钮
+    border: 1px solid rgba(0, 0, 0, 0.08);
+
+    background-color: #fff;
+    color: #000; // 保持你现在的字体颜色
+    font-size: 14px;
+    font-weight: 500;
+
+    cursor: pointer;
+    user-select: none;
+
+    box-shadow: 0 1px 2px rgba(15, 23, 42, 0.08);
+    transition: all 0.18s ease-out;
+
+    &:hover {
+      box-shadow: 0 4px 10px rgba(15, 23, 42, 0.14);
+      transform: translateY(-1px);
+    }
+
+    &:active:not(:disabled) {
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.16);
+      transform: translateY(0);
+      background-color: #000;
+      color: #fff;
+    }
+  }
 }
 </style>

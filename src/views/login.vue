@@ -94,6 +94,7 @@
         <span @click="handleToBlog" style="cursor: pointer">About Me</span>
       </div>
     </div>
+    <Loading v-show="showLoading"/>
   </div>
 </template>
 <script setup lang="ts">
@@ -101,8 +102,9 @@ import backImg from "@/assets/image.png";
 import { onMounted, reactive, ref } from "vue";
 
 import { loginHooks } from "@/hooks/loginHooks.js";
+import Loading from "@/components/Loading.vue";
 const showPage=ref(false)
-const {mode,loginForm,registerForm,handleLogin,handleRegister}=loginHooks()
+const {mode,loginForm,registerForm,handleLogin,handleRegister,showLoading}=loginHooks()
 
 const accountLabel = ref("Account");
 const passwordLabel = ref("Password");

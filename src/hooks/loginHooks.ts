@@ -7,6 +7,7 @@ export const loginHooks = () => {
   const router = useRouter();
   const mode = ref("login");
   const userStore = useUserStore();
+  const showLoading = ref(false);
   const loginForm = reactive({
     account: "",
     password: "",
@@ -48,6 +49,7 @@ export const loginHooks = () => {
       return;
     }
     try {
+      showLoading.value = true;
       const res = await login(loginForm);
       if (!res) return;
       const { success, code, data } = res?.data;
@@ -66,6 +68,8 @@ export const loginHooks = () => {
     } catch (e) {
       console.error(e);
       Message.error("账号密码错误");
+    }finally{
+      showLoading.value = false;
     }
   };
   const handleRegister = async (e: any) => {
@@ -78,6 +82,7 @@ export const loginHooks = () => {
       return;
     }
     try {
+      showLoading.value = true;
       const res = await register(registerForm);
       if (!res) return;
       const { success, code, data } = res?.data;
@@ -89,7 +94,9 @@ export const loginHooks = () => {
       }
     } catch (e) {
       console.error(e);
+    }finally{
+      showLoading.value = false;
     }
   };
-  return { mode, loginForm, registerForm, handleLogin, handleRegister };
+  return { mode, loginForm, registerForm, handleLogin, handleRegister,showLoading };
 };
