@@ -1,7 +1,10 @@
 <template>
   <!-- :style="{ backgroundImage: `url(${backImg})`, backgroundSize: 'cover' }" -->
    <video v-show="!showPage" class="start-video" src="https://file.ybcfish.cloud/loadingStart.mp4" autoplay muted playsinline></video>
-  <div id="login" v-show="showPage">
+  <!-- <div class="bg-carousel">
+    <img v-for="(item,index) in bgList" :key="index" class="bg-img" :class="{active:index===currentBgIndex}" :src="item?.url" alt=""/>
+  </div> -->
+   <div id="login" v-show="showPage">
     <video class="bg-video" src="https://file.ybcfish.cloud/snow.mp4" autoplay loop muted playsinline></video>
     <div class="header"></div>
     <div class="main flexCenter">
@@ -99,7 +102,7 @@
 </template>
 <script setup lang="ts">
 import backImg from "@/assets/image.png";
-import { onMounted, reactive, ref } from "vue";
+import { onBeforeUnmount, onMounted, reactive, ref } from "vue";
 
 import { loginHooks } from "@/hooks/loginHooks.js";
 import Loading from "@/components/Loading.vue";
@@ -115,10 +118,37 @@ const changeMode=(value:string)=>{
 const handleToBlog = () => {
   window.open("https://blog.ybcfish.cloud", "_blank");
 };
-onMounted(()=>{
-  setTimeout(()=>{
-    showPage.value=true
-  },5000)
+const currentBgIndex=ref(0)
+const bgList=[{url:'https://file.ybcfish.cloud/card.png'},{url:'https://file.ybcfish.cloud/ybcblog.png'},{url:'https://file.ybcfish.cloud/userList942.png'}]
+let bgtimer:any=null
+const clearBgTimer=()=>{
+  if(bgtimer){
+    clearInterval(bgtimer)
+    bgtimer=null
+  }
+}
+const startBgTimer=()=>{
+  clearBgTimer()
+  bgtimer=setInterval(()=>{
+    currentBgIndex.value=(currentBgIndex.value+1)%bgList.length
+  },4000)
+}
+const sleep = (time: number) => {
+  return new Promise(resolve => {
+    setTimeout(resolve, time)
+  })
+}
+onMounted(async()=>{
+  // setTimeout(()=>{
+  //   showPage.value=true
+  // },5000)
+  //睡眠
+  await sleep(5000)
+  showPage.value=true
+  startBgTimer()
+})
+onBeforeUnmount(()=>{
+  clearBgTimer()
 })
 </script>
 <style lang="scss" scoped>
@@ -344,6 +374,27 @@ onMounted(()=>{
 .register-leave-to {
   transform: translateX(100%); // 离场结束：右平移100%（完全移出视口）
   opacity: 0;
+}
+.bg-carousel{
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  z-index: -2;
+  inset: 0;
+  .bg-img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 1s ease-in-out, transform 4s ease;
+    // transform: scale(1.04);
+    &.active{
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
 }
 </style>
 
