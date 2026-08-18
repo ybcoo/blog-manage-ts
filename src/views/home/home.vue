@@ -11,13 +11,15 @@ import type{formType} from '@/assets/interface/FormInterface'
 import { getArticle } from '@/api/api';
 import { useArticleStore } from '@/stores/AtricleStore';
 import Loading from '@/components/Loading.vue';
+import { useUserStore } from '@/stores/UserStore';
+const userStore=useUserStore()
 const showLoading=ref(false)
 const atricleStore=useArticleStore()
 const articleList = ref<formType[]>([]);
 const getArticleList=async()=>{
     try{
         showLoading.value=true
-        const res=await getArticle({pageNum:atricleStore.currentPage,pageSize:10}) 
+        const res=await getArticle({pageNum:atricleStore.currentPage,pageSize:10,userId:userStore?.userId}) 
         if(res?.data?.success){
             const {result}=res?.data
             const {list,total}=result
