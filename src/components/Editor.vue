@@ -1,5 +1,5 @@
 <template>
-  <div style="border: 1px solid #ccc; border-radius: 20px; overflow: hidden; width: 100%">
+  <div style="display: flex;flex-direction: column;border: 1px solid #ccc; border-radius: 20px; overflow: hidden; width: 100%;flex:1">
     <Toolbar
       style="border-bottom: 1px solid #ccc"
       :editor="editorRef"
@@ -7,7 +7,7 @@
       :mode="mode"
     />
     <Editor
-      style="height: 500px; overflow-y: hidden"
+      style="flex:1;overflow-y: auto"
       v-model="valueHtml"
       :defaultConfig="editorConfig"
       :mode="mode"

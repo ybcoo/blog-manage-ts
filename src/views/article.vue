@@ -94,7 +94,7 @@ const getFile = async (file: any, url: any) => {
     flex-direction: column;
     flex: 1;
     height: 100%;
-    padding: 0 0 40px 0;
+    padding: 0;
     @media (max-width: 860px) {
       display: none;
     }
