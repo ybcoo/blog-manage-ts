@@ -24,6 +24,7 @@ import { Editor, Toolbar } from "@wangeditor/editor-for-vue";
 import "@wangeditor/editor/dist/css/style.css";
 const props = defineProps<{
   modelValue?: string;
+  folderId?:string
 }>();
 const emit = defineEmits<{
   (e: "update:modelValue", v: any): any;
@@ -50,6 +51,7 @@ const editorConfig = { placeholder: "请输入内容...",
       async customUpload(file: File, insertFn: (url: string, alt?: string, href?: string) => void) {
         const fd = new FormData()
         fd.append('file', file)
+        fd.append('folder', `article/${props?.folderId}/`)
         try {
           const res = await uploadImage(fd)
           const url=res?.data?.url
@@ -66,6 +68,7 @@ const editorConfig = { placeholder: "请输入内容...",
       async customUpload(file: File, insertFn: (url: string, poster?: string) => void) {
         const fd = new FormData()
         fd.append('file', file)
+        fd.append('folder', `article/${props?.folderId}/`)
         try {
           const res = await uploadVideo(fd)
           const url=res?.data?.url

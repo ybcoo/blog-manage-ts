@@ -201,6 +201,7 @@ const onChange=async(_:any,fileItem:any)=>{
   userStore.avatar = URL.createObjectURL(fileItem?.file)
   const fd=new FormData()
   fd.append('file',fileItem?.file)
+  fd.append('folder', 'userAvatar/')
   try{
     const res=await uploadImage(fd)
     const urlRes=res?.data?.url

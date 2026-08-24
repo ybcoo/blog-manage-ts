@@ -7,4 +7,5 @@ export interface formType {
   file?: any;
   url: string;
   content: string;
+  uuid?:string
 }

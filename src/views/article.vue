@@ -4,7 +4,7 @@
       <FishInput v-model="form.title" placeholder="请输入标题"></FishInput>
       <Upload v-model="form.url" @change="getFile"></Upload>
       <DropDown v-model="form.type"></DropDown>
-      <Editor v-model="form.content"></Editor>
+      <Editor v-model="form.content" :folderId="folderId"></Editor>
     </div>
     <div class="right">
       <Preview :form="form"></Preview>
@@ -45,8 +45,10 @@ const form = reactive<formType>({
   file: null,
   url: "",
   content: "",
+  uuid:''
 });
-
+let folderId=crypto.randomUUID()
+form.uuid=folderId//默认为新建=folderId
 watch(
   () => form,
   (newVal, oldVal) => {
@@ -59,6 +61,7 @@ onMounted(() => {
   if (id) {
     //编辑
     const item = atricleStore.selectedItem;
+    folderId=item?.uuid//编辑复用同一个uuid
     Object.assign(form, item);
   }
 });
@@ -66,6 +69,7 @@ const getFile = async (file: any, url: any) => {
   form.file = file;
   const fd = new FormData();
   fd.append("file", file);
+  fd.append('folder', `article/${folderId}/`)
   try {
     const res = await uploadImage(fd);
     const urlRes = res?.data?.url;
