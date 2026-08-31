@@ -74,7 +74,7 @@ const changePlaying = async() => {
     .typeCnt{
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 10px;
     }
   }
   .content {
