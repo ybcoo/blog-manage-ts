@@ -3,6 +3,7 @@
     <div class="left">
       <FishInput v-model="form.title" placeholder="请输入标题"></FishInput>
       <Upload v-model="form.url" @change="getFile"></Upload>
+      <FishInput v-model="form.musicUrl" placeholder="请输入url"></FishInput>
       <DropDown v-model="form.type"></DropDown>
       <Editor v-model="form.content" :folderId="folderId"></Editor>
     </div>
@@ -45,6 +46,7 @@ const form = reactive<formType>({
   file: null,
   url: "",
   content: "",
+  musicUrl:'',
   uuid:''
 });
 let folderId=crypto.randomUUID()
