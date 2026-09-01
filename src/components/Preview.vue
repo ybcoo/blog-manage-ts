@@ -8,7 +8,7 @@
       </h3>
       <h3 v-else style="color: #444444">{{ typeMap[(form?.type?.value||form?.type) as any] }}</h3>
     <img class="musicIcon" v-if="form?.musicUrl" :src="isPlaying?pauseIcon:playIcon" alt="" @click="changePlaying">
-    <audio v-if="form?.musicUrl" ref="audioRef" :src="form?.musicUrl"></audio>
+    <audio v-if="form?.musicUrl" ref="audioRef" :src="form?.musicUrl" @ended="handleMusicEnded"></audio>
     </div>
       
     </div>
@@ -47,6 +47,9 @@ const changePlaying = async() => {
     audio.pause()
     isPlaying.value=false
   }
+}
+const handleMusicEnded=()=>{
+  isPlaying.value=false
 }
 </script>
 <style lang="scss" scoped>
